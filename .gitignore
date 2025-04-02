@@ -1,0 +1,59 @@
+# ------------------------
+# Python-related ignores
+# ------------------------
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+*.log
+
+# ------------------------
+# Jupyter Notebooks
+# ------------------------
+.ipynb_checkpoints/
+
+# ------------------------
+# Model files
+# ------------------------
+*.h5
+*.keras
+*.hdf5
+*.pb
+
+# ------------------------
+# Data files
+# ------------------------
+datasets/
+*.csv
+*.zip
+
+# ------------------------
+# Virtual environment
+# ------------------------
+.venv/
+env/
+venv/
+ENV/
+
+# ------------------------
+# Flask & web app
+# ------------------------
+uploads/
+instance/
+*.db
+*.sqlite3
+
+# ------------------------
+# OS/Editor/System files
+# ------------------------
+.DS_Store
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# ------------------------
+# Environment config
+# ------------------------
+.env
