@@ -133,7 +133,7 @@ python app.py
 ## 📬 Contact
 
 For feedback or collaboration:  
-📧 [skaamershaik@gmail.com]  
+📧 skaamershaik@gmail.com
 
 
 ---
