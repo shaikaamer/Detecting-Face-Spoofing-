@@ -1,5 +1,4 @@
 # Detecting-Face-Spoofing-
-Here’s a **professional, well-structured README** for your GitHub repository [`Detecting-Face-Spoofing`](https://github.com/shaikaamer/Detecting-Face-Spoofing), designed to align with your project rubric and impress evaluators:
 
 ---
 
