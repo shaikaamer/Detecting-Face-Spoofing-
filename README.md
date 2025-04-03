@@ -1,4 +1,4 @@
-# Detecting-Face-Spoofing-
+# Detecting-Face-Spoofing
 
 ---
 
