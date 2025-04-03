@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" x-data="{ fileSelected: false, loading: false }">
+<head>
+    <meta charset="UTF-8">
+    <title>Face Anomaly Detection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Alpine.js -->
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+</head>
+<body class="bg-gradient-to-r from-slate-900 to-gray-800 text-white min-h-screen flex flex-col justify-center items-center p-6">
+
+    <div class="w-full max-w-2xl bg-gray-900 border border-gray-700 shadow-2xl rounded-xl p-8 transition duration-300 ease-in-out hover:shadow-indigo-500/50">
+        <h1 class="text-4xl font-extrabold text-center text-indigo-400 mb-4 drop-shadow-md">Face Anomaly Detection</h1>
+        <p class="text-center text-gray-400 mb-6 text-lg">
+            Upload a face image to determine if it’s 
+            <span class="text-green-400 font-bold">Live</span> or 
+            <span class="text-red-400 font-bold">Spoof</span>.
+        </p>
+
+        <!-- Upload Form -->
+        <form method="POST" enctype="multipart/form-data"
+              class="flex flex-col items-center space-y-4 w-full"
+              @submit="loading = true">
+              
+            <input type="file" name="file" accept="image/*" required
+                   @change="fileSelected = true"
+                   class="file:bg-indigo-600 file:text-white file:px-4 file:py-2 file:rounded-md
+                          file:border-none file:cursor-pointer
+                          bg-gray-800 text-gray-300 border border-gray-600 rounded-lg w-full shadow-sm">
+                          
+            <template x-if="fileSelected">
+                <p class="text-sm text-green-400">✔ File selected</p>
+            </template>
+
+            <button type="submit"
+                    :disabled="loading"
+                    :class="loading ? 'opacity-50 cursor-not-allowed' : ''"
+                    class="w-full py-2 px-6 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow transition duration-200">
+                 Detect
+            </button>
+        </form>
+
+        <!-- Loading Spinner -->
+        <div class="mt-4 text-center" x-show="loading">
+            <svg class="animate-spin h-6 w-6 text-indigo-500 mx-auto" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+            </svg>
+            <p class="text-sm text-gray-400 mt-2">Analyzing...</p>
+        </div>
+
+        {% if result %}
+        <!-- Results Section -->
+        <div class="mt-10 border-t border-gray-700 pt-6" x-show="!loading">
+            <h2 class="text-2xl font-bold mb-2 text-center
+                       {% if 'Anomalous' in result %}text-red-400{% else %}text-green-400{% endif %}">
+                Result: {{ result }}
+            </h2>
+            <div class="text-center text-sm text-gray-300 space-y-1">
+                <p><strong>Reconstruction Error (MSE):</strong> {{ mse_error }}</p>
+                <p><strong>Classifier Score:</strong> {{ prediction }}</p>
+                <p class="italic text-xs text-gray-500">{{ rule }}</p>
+            </div>
+            <div class="mt-5 flex justify-center">
+                <img src="{{ url_for('static', filename=image) }}"
+                     alt="Uploaded Face"
+                     class="w-48 h-auto rounded-lg shadow-md border border-gray-700 hover:scale-105 transition duration-300"
+                     onerror="this.style.display='none';">
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
