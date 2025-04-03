@@ -61,17 +61,26 @@ def process_image(image_path):
     if mse_error > 0.01:
         if prediction > 0.6:
             anomaly_result = "Anomalous-Fake/Defective"
+            result_dir = "results/negative"
         else:
             anomaly_result = "Normal"
+            result_dir = "results/positive"
     else:
         if prediction > 0.4:
             anomaly_result = "Anomalous-Fake/Defective"
+            result_dir = "results/negative"
         else:
             anomaly_result = "Normal"
+            result_dir = "results/positive"
 
     # Log the result for later analysis
-    log_prediction(os.path.basename(image_path), mse_error, prediction, anomaly_result)
+    os.makedirs(result_dir, exist_ok=True)  # Ensure the directory exists
 
+    # Save a copy of the image to the result folder
+    result_image_path = os.path.join(result_dir, os.path.basename(image_path))
+    cv2.imwrite(result_image_path, cv2.imread(image_path))
+
+    log_prediction(os.path.basename(image_path), mse_error, prediction, anomaly_result)
     return anomaly_result, mse_error, prediction
 
 # -----------------------------
